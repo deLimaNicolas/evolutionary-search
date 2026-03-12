@@ -191,22 +191,6 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(180),
             is_exact_feasible: false,
         },
-        // ====================================================================
-        //  NEW LEVELS 11-20: THE APPROXIMATION GAUNTLET
-        //
-        //  These are designed so that:
-        //    - DP tables cannot fit in memory (n * cap >> RAM)
-        //    - Item counts are large enough that naive recursion is dead
-        //    - Value/weight correlations vary to break simple heuristics
-        //    - Time limits are tight relative to problem size
-        //    - Greedy is decent but beatable with smarter approximations
-        //
-        //  To beat greedy here you'll need things like:
-        //    - FPTAS (scale values down, run DP on reduced space)
-        //    - Branch and bound with LP relaxation upper bounds
-        //    - Simulated annealing / genetic algorithms
-        //    - Greedy + local search (swap neighborhoods)
-        // ====================================================================
         Level {
             number: 11,
             name: "No More Tables",
