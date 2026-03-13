@@ -13,24 +13,22 @@ use std::time::{Duration, Instant};
 //  Each level is seeded deterministically so results are reproducible.
 // ============================================================================
 
-/// A single knapsack item.
+// ============================================================================
+// Struct Definitions
 #[derive(Debug, Clone)]
 pub struct Item {
     pub weight: u64,
     pub value: u64,
 }
 
-/// A problem instance.
 #[derive(Debug, Clone)]
 pub struct KnapsackProblem {
     pub items: Vec<Item>,
     pub capacity: u64,
 }
 
-/// Result from a solver.
 #[derive(Debug, Clone)]
 pub struct KnapsackSolution {
-    /// Indices of items selected (0-based).
     pub selected: Vec<usize>,
 }
 
@@ -58,7 +56,6 @@ impl KnapsackSolution {
         self.total_weight(problem) <= problem.capacity
     }
 }
-
 // ============================================================================
 //  LEVEL DEFINITIONS
 // ============================================================================
@@ -73,7 +70,7 @@ pub struct Level {
     pub max_weight: u64,
     pub max_value: u64,
     pub time_limit: Duration,
-    pub is_exact_feasible: bool, // can a mortal machine solve this exactly?
+    pub is_exact_feasible: bool, // local machine solve this exactly? or does it require approximation?
 }
 
 pub fn get_levels() -> Vec<Level> {
