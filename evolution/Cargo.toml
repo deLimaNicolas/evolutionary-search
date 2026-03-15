@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 capacity = { path = "../" }
+rand = "0.8"
+
