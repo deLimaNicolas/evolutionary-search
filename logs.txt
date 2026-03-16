@@ -1,0 +1,190 @@
+
+
+  KNAPSACK BENCHMARK — 0/1 Knapsack, 20 Levels
+  Seed: 42
+  Solver timeout: 180s
+
+  Lv  1: Warm-Up                — 10 items. Sanity check. [exact]
+  Lv  2: Gem Trap S             — 30 items. Greedy grabs pebbles, misses diamonds. [exact]
+  Lv  3: Weight Cliff           — 40 items. One heavy item worth more than the rest combined. [exact]
+  Lv  4: Inverse Density S      — 50 items. Best combo has worst individual density. [exact]
+  Lv  5: Decoy Flood S          — 100 items. 90% decoys with great density but tiny value. [exact]
+  Lv  6: Respectable            — 200 items. Standard random distribution. [exact]
+  Lv  7: Gem Trap M             — 200 items. Scaled up diamond vs pebble trap. [exact]
+  Lv  8: Staircase              — 300 items. Value grows quadratically with weight steps. [exact]
+  Lv  9: Decoy Flood M          — 500 items. 90% are shiny decoys. 10% are the real deal. [exact]
+  Lv 10: Inverse Density M      — 500 items. Low density items pack perfectly together. [exact]
+  Lv 11: Gem Trap L             — 1K items. Greedy fills up on sand, misses the gold. [exact]
+  Lv 12: Capacity Wasters       — 1K items. Greedy leaves 30% capacity unused. [exact]
+  Lv 13: Sweaty                 — 2K items. Standard distribution. Last chance for DP. [approx]
+  Lv 14: Quadratic Value        — 2K items. Value = weight². Heavy items are gold. [approx]
+  Lv 15: Gem Trap XL            — 10K items. Massive gem trap at scale. [approx]
+  Lv 16: Correlated Chaos       — 10K items. Value ≈ weight. Density sorting is a coin flip. [approx]
+  Lv 17: Heavy Hitters          — 10K items. Value scales with sqrt(weight). Heavy = gold. [approx]
+  Lv 18: Greedy's Nightmare     — 5K items. Every greedy heuristic fails here. [approx]
+  Lv 19: Heavy Hitters XL       — 50K items. Quadratic value at massive scale. [approx]
+  Lv 20: God Mode               — 100K items. Standard distribution. Pure scale. [approx]
+
+
+  ┌─────────────────────────────────────────────────────┐
+  │  SOLVER: Recursive (brute force)                    │
+  └─────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  Lv  Name                      Items       Your Value     Greedy Value      Diff       Time   Limit  Status
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  1   Warm-Up                      10              356              350        +6      0.0ms      2s    PASS
+  2   Gem Trap S                   30              966              953       +13      4.09s      5s    PASS
+  3   Weight Cliff                 40                0              339         0    TIMEOUT      5s TIMEOUT
+  4   Inverse Density S            50                0             6764         0          —      5s SKIPPED
+  5   Decoy Flood S               100                0             1516         0          —      5s SKIPPED
+  6   Respectable                 200                0            63143         0          —     10s SKIPPED
+  7   Gem Trap M                  200                0            55799         0          —     15s SKIPPED
+  8   Staircase                   300                0            80801         0          —     15s SKIPPED
+  9   Decoy Flood M               500                0            16959         0          —     15s SKIPPED
+  10  Inverse Density M           500                0           123405         0          —     20s SKIPPED
+  11  Gem Trap L                 1000                0          2507164         0          —     30s SKIPPED
+  12  Capacity Wasters           1000                0          1270513         0          —     30s SKIPPED
+  13  Sweaty                     2000                0          5892051         0          —     30s SKIPPED
+  14  Quadratic Value            2000                0         40552784         0          —     30s SKIPPED
+  15  Gem Trap XL               10000                0        203848045         0          —     60s SKIPPED
+  16  Correlated Chaos          10000                0     542378045296         0          —     60s SKIPPED
+  17  Heavy Hitters             10000                0      23598590768         0          —     60s SKIPPED
+  18  Greedy's Nightmare         5000                0         65358152         0          —     60s SKIPPED
+  19  Heavy Hitters XL          50000                0    1874065671475         0          —    120s SKIPPED
+  20  God Mode                 100000                0    1627771170890         0          —    120s SKIPPED
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  Levels beaten (>= greedy): 2/20
+  Timeouts:                  1
+  Total value vs greedy:     +19
+
+
+
+  ┌─────────────────────────────────────────────────────┐
+  │  SOLVER: Recursive + Memoization                    │
+  └─────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  Lv  Name                      Items       Your Value     Greedy Value      Diff       Time   Limit  Status
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  1   Warm-Up                      10              356              350        +6      0.5ms      2s    PASS
+  2   Gem Trap S                   30              966              953       +13      3.6ms      5s    PASS
+  3   Weight Cliff                 40              384              339       +45      5.5ms      5s    PASS
+  4   Inverse Density S            50             6848             6764       +84     18.7ms      5s    PASS
+  5   Decoy Flood S               100             1614             1516       +98     51.7ms      5s    PASS
+  6   Respectable                 200            63196            63143       +53      5.64s     10s    PASS
+  7   Gem Trap M                  200            55833            55799       +34    879.9ms     15s    PASS
+  8   Staircase                   300            80801            80801        +0    147.1ms     15s    PASS
+  9   Decoy Flood M               500            16960            16959        +1      6.11s     15s    PASS
+  10  Inverse Density M           500           123405           123405        +0     19.74s     20s    PASS
+  11  Gem Trap L                 1000                0          2507164         0    TIMEOUT     30s TIMEOUT
+  12  Capacity Wasters           1000                0          1270513         0          —     30s SKIPPED
+  13  Sweaty                     2000                0          5892051         0          —     30s SKIPPED
+  14  Quadratic Value            2000                0         40552784         0          —     30s SKIPPED
+  15  Gem Trap XL               10000                0        203848045         0          —     60s SKIPPED
+  16  Correlated Chaos          10000                0     542378045296         0          —     60s SKIPPED
+  17  Heavy Hitters             10000                0      23598590768         0          —     60s SKIPPED
+  18  Greedy's Nightmare         5000                0         65358152         0          —     60s SKIPPED
+  19  Heavy Hitters XL          50000                0    1874065671475         0          —    120s SKIPPED
+  20  God Mode                 100000                0    1627771170890         0          —    120s SKIPPED
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  Levels beaten (>= greedy): 10/20
+  Timeouts:                  1
+  Total value vs greedy:     +334
+
+
+
+  ┌─────────────────────────────────────────────────────┐
+  │  SOLVER: Tabular DP                                 │
+  └─────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  Lv  Name                      Items       Your Value     Greedy Value      Diff       Time   Limit  Status
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  1   Warm-Up                      10              356              350        +6      2.2ms      2s    PASS
+  2   Gem Trap S                   30              966              953       +13      0.8ms      5s    PASS
+  3   Weight Cliff                 40              384              339       +45      0.2ms      5s    PASS
+  4   Inverse Density S            50             6848             6764       +84      0.9ms      5s    PASS
+  5   Decoy Flood S               100             1614             1516       +98      1.3ms      5s    PASS
+  6   Respectable                 200            63196            63143       +53    146.5ms     10s    PASS
+  7   Gem Trap M                  200            55833            55799       +34     23.7ms     15s    PASS
+  8   Staircase                   300            80801            80801        +0    401.3ms     15s    PASS
+  9   Decoy Flood M               500            16960            16959        +1     97.0ms     15s    PASS
+  10  Inverse Density M           500           123405           123405        +0    307.0ms     20s    PASS
+  11  Gem Trap L                 1000          2509654          2507164     +2490      4.39s     30s    PASS
+zsh: killed     cargo run
+
+
+
+
+  ┌─────────────────────────────────────────────────────┐
+  │  SOLVER: Evolutionary                               │
+  └─────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  Lv  Name                      Items       Your Value     Greedy Value      Diff       Time   Limit  Status
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  1   Warm-Up                      10              356              350        +6      5.08s      2s    SLOW
+  2   Gem Trap S                   30              966              953       +13      8.06s      5s    SLOW
+  3   Weight Cliff                 40              384              339       +45     10.82s      5s    SLOW
+  4   Inverse Density S            50             6848             6764       +84     11.29s      5s    SLOW
+  5   Decoy Flood S               100             1612             1516       +96      9.47s      5s    SLOW
+  6   Respectable                 200            63143            63143        +0      4.96s     10s    PASS
+  7   Gem Trap M                  200            55799            55799        +0      5.94s     15s    PASS
+  8   Staircase                   300            80801            80801        +0      5.14s     15s    PASS
+  9   Decoy Flood M               500            16959            16959        +0      7.64s     15s    PASS
+  10  Inverse Density M           500           123405           123405        +0      9.27s     20s    PASS
+  11  Gem Trap L                 1000          2507164          2507164        +0      5.80s     30s    PASS
+  12  Capacity Wasters           1000          1270513          1270513        +0      4.75s     30s    PASS
+  13  Sweaty                     2000          5892051          5892051        +0      9.36s     30s    PASS
+  14  Quadratic Value            2000         40569433         40552784    +16649      9.73s     30s    PASS
+  15  Gem Trap XL               10000        203848045        203848045        +0     20.80s     60s    PASS
+  16  Correlated Chaos          10000     542378045296     542378045296        +0     15.21s     60s    PASS
+  17  Heavy Hitters             10000      23598965774      23598590768   +375006     21.34s     60s    PASS
+  18  Greedy's Nightmare         5000         65358152         65358152        +0      9.71s     60s    PASS
+  19  Heavy Hitters XL          50000    1874127125872    1874065671475 +61454397     32.32s    120s    PASS
+  20  God Mode                 100000    1627771170890    1627771170890        +0     19.82s    120s    PASS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  Levels beaten (>= greedy): 15/20
+  Timeouts:                  0
+  Total value vs greedy:     +61846296
+
+after last changes
+
+
+  ┌─────────────────────────────────────────────────────┐
+  │  SOLVER: Evolutionary                               │
+  └─────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  Lv  Name                      Items       Your Value     Greedy Value      Diff       Time   Limit  Status
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  1   Warm-Up                      10              356              350        +6     63.70s      2s    SLOW
+  2   Gem Trap S                   30              966              953       +13     77.11s      5s    SLOW
+  3   Weight Cliff                 40              384              339       +45     84.21s      5s    SLOW
+  4   Inverse Density S            50             6848             6764       +84    106.42s      5s    SLOW
+  5   Decoy Flood S               100             1605             1516       +89     71.30s      5s    SLOW
+  6   Respectable                 200            63143            63143        +0     38.28s     10s    SLOW
+  7   Gem Trap M                  200            55799            55799        +0     47.05s     15s    SLOW
+  8   Staircase                   300            80801            80801        +0     32.89s     15s    SLOW
+  9   Decoy Flood M               500            16959            16959        +0     52.27s     15s    SLOW
+  10  Inverse Density M           500           123405           123405        +0     67.43s     20s    SLOW
+  11  Gem Trap L                 1000          2507164          2507164        +0     52.05s     30s    SLOW
+  12  Capacity Wasters           1000          1270513          1270513        +0     41.30s     30s    SLOW
+  13  Sweaty                     2000          5892051          5892051        +0     80.21s     30s    SLOW
+  14  Quadratic Value            2000         40570395         40552784    +17611     89.64s     30s    SLOW
+  15  Gem Trap XL               10000        203848045        203848045        +0    180.68s     60s    SLOW
+  16  Correlated Chaos          10000     542378045296     542378045296        +0    119.57s     60s    SLOW
+  17  Heavy Hitters             10000      23598961728      23598590768   +370960    180.89s     60s    SLOW
+  18  Greedy's Nightmare         5000         65358152         65358152        +0     80.28s     60s    SLOW
+  19  Heavy Hitters XL          50000    1874135847922    1874065671475 +70176447    207.41s    120s    SLOW
+  20  God Mode                 100000    1627771170890    1627771170890        +0    121.68s    120s    SLOW
+════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  Levels beaten (>= greedy): 0/20
+  Timeouts:                  0
+  Total value vs greedy:     +70565255
+

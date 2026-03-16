@@ -63,10 +63,11 @@ pub struct Level {
 
 pub fn get_levels() -> Vec<Level> {
     vec![
+        // Lv 1: Standard (baseline)
         Level {
             number: 1,
             name: "Warm-Up",
-            description: "10 items. Your cat could solve this.",
+            description: "10 items. Sanity check.",
             num_items: 10,
             capacity_factor: 0.5,
             max_weight: 50,
@@ -74,21 +75,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(2),
             is_exact_feasible: true,
         },
+        // Lv 2: ANTI-GREEDY — Gem Trap (heavy diamonds, light pebbles)
         Level {
             number: 2,
-            name: "Easy",
-            description: "50 items. Brute force starts sweating.",
-            num_items: 50,
-            capacity_factor: 0.4,
-            max_weight: 200,
-            max_value: 500,
-            time_limit: Duration::from_secs(5),
-            is_exact_feasible: true,
-        },
-        Level {
-            number: 3,
             name: "Gem Trap S",
-            description: "30 items. Heavy diamonds vs light pebbles.",
+            description: "30 items. Greedy grabs pebbles, misses diamonds.",
             num_items: 30,
             capacity_factor: 0.3,
             max_weight: 100,
@@ -96,10 +87,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(5),
             is_exact_feasible: true,
         },
+        // Lv 3: ANTI-GREEDY — Weight Cliff (one item worth more than all others combined)
         Level {
-            number: 4,
-            name: "Weight Cliff S",
-            description: "40 items. One heavy item worth more than all light ones combined.",
+            number: 3,
+            name: "Weight Cliff",
+            description: "40 items. One heavy item worth more than the rest combined.",
             num_items: 40,
             capacity_factor: 0.25,
             max_weight: 100,
@@ -107,8 +99,9 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(5),
             is_exact_feasible: true,
         },
+        // Lv 4: ANTI-GREEDY — Inverse Density (best combo = worst density)
         Level {
-            number: 5,
+            number: 4,
             name: "Inverse Density S",
             description: "50 items. Best combo has worst individual density.",
             num_items: 50,
@@ -118,10 +111,23 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(5),
             is_exact_feasible: true,
         },
+        // Lv 5: ANTI-GREEDY — Decoy Flood (90% decoys with amazing density, tiny value)
+        Level {
+            number: 5,
+            name: "Decoy Flood S",
+            description: "100 items. 90% decoys with great density but tiny value.",
+            num_items: 100,
+            capacity_factor: 0.15,
+            max_weight: 500,
+            max_value: 500,
+            time_limit: Duration::from_secs(5),
+            is_exact_feasible: true,
+        },
+        // Lv 6: Standard (DP territory)
         Level {
             number: 6,
             name: "Respectable",
-            description: "200 items. You need DP or you're cooked.",
+            description: "200 items. Standard random distribution.",
             num_items: 200,
             capacity_factor: 0.35,
             max_weight: 500,
@@ -129,10 +135,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(10),
             is_exact_feasible: true,
         },
+        // Lv 7: ANTI-GREEDY — Gem Trap scaled up
         Level {
             number: 7,
             name: "Gem Trap M",
-            description: "200 items. Greedy grabs pebbles, misses diamonds.",
+            description: "200 items. Scaled up diamond vs pebble trap.",
             num_items: 200,
             capacity_factor: 0.2,
             max_weight: 500,
@@ -140,10 +147,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(15),
             is_exact_feasible: true,
         },
+        // Lv 8: ANTI-GREEDY — Staircase (quadratic value in steps)
         Level {
             number: 8,
             name: "Staircase",
-            description: "300 items. Items form a staircase — greedy trips on the steps.",
+            description: "300 items. Value grows quadratically with weight steps.",
             num_items: 300,
             capacity_factor: 0.25,
             max_weight: 1_000,
@@ -151,10 +159,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(15),
             is_exact_feasible: true,
         },
+        // Lv 9: ANTI-GREEDY — Decoy Flood scaled up
         Level {
             number: 9,
-            name: "Decoy Flood",
-            description: "500 items. 90% are decoys with amazing density but tiny value.",
+            name: "Decoy Flood M",
+            description: "500 items. 90% are shiny decoys. 10% are the real deal.",
             num_items: 500,
             capacity_factor: 0.15,
             max_weight: 1_000,
@@ -162,9 +171,10 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(15),
             is_exact_feasible: true,
         },
+        // Lv 10: ANTI-GREEDY — Inverse Density scaled up
         Level {
             number: 10,
-            name: "Anti-Density M",
+            name: "Inverse Density M",
             description: "500 items. Low density items pack perfectly together.",
             num_items: 500,
             capacity_factor: 0.2,
@@ -173,21 +183,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(20),
             is_exact_feasible: true,
         },
+        // Lv 11: ANTI-GREEDY — Gem Trap large
         Level {
             number: 11,
-            name: "Sweaty",
-            description: "1,000 items. Memory-efficient DP or bust.",
-            num_items: 1_000,
-            capacity_factor: 0.25,
-            max_weight: 5_000,
-            max_value: 10_000,
-            time_limit: Duration::from_secs(30),
-            is_exact_feasible: true,
-        },
-        Level {
-            number: 12,
             name: "Gem Trap L",
-            description: "1K items. Scaled up gem trap.",
+            description: "1K items. Greedy fills up on sand, misses the gold.",
             num_items: 1_000,
             capacity_factor: 0.15,
             max_weight: 5_000,
@@ -195,8 +195,33 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(30),
             is_exact_feasible: true,
         },
+        // Lv 12: ANTI-GREEDY — Capacity Wasters (greedy leaves gaps)
+        Level {
+            number: 12,
+            name: "Capacity Wasters",
+            description: "1K items. Greedy leaves 30% capacity unused.",
+            num_items: 1_000,
+            capacity_factor: 0.2,
+            max_weight: 5_000,
+            max_value: 5_000,
+            time_limit: Duration::from_secs(30),
+            is_exact_feasible: true,
+        },
+        // Lv 13: Standard (DP limit)
         Level {
             number: 13,
+            name: "Sweaty",
+            description: "2K items. Standard distribution. Last chance for DP.",
+            num_items: 2_000,
+            capacity_factor: 0.25,
+            max_weight: 5_000,
+            max_value: 10_000,
+            time_limit: Duration::from_secs(30),
+            is_exact_feasible: false,
+        },
+        // Lv 14: ANTI-GREEDY — Quadratic Value (v = w²)
+        Level {
+            number: 14,
             name: "Quadratic Value",
             description: "2K items. Value = weight². Heavy items are gold.",
             num_items: 2_000,
@@ -206,21 +231,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(30),
             is_exact_feasible: false,
         },
-        Level {
-            number: 14,
-            name: "Capacity Wasters",
-            description: "2K items. Greedy leaves 30% capacity unused.",
-            num_items: 2_000,
-            capacity_factor: 0.2,
-            max_weight: 10_000,
-            max_value: 10_000,
-            time_limit: Duration::from_secs(30),
-            is_exact_feasible: false,
-        },
+        // Lv 15: ANTI-GREEDY — Gem Trap XL
         Level {
             number: 15,
             name: "Gem Trap XL",
-            description: "10K items. Massive gem trap.",
+            description: "10K items. Massive gem trap at scale.",
             num_items: 10_000,
             capacity_factor: 0.1,
             max_weight: 100_000,
@@ -228,10 +243,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(60),
             is_exact_feasible: false,
         },
+        // Lv 16: ANTI-GREEDY — Correlated Chaos (value ≈ weight, density meaningless)
         Level {
             number: 16,
             name: "Correlated Chaos",
-            description: "10K items where value ~ weight. Density is meaningless.",
+            description: "10K items. Value ≈ weight. Density sorting is a coin flip.",
             num_items: 10_000,
             capacity_factor: 0.2,
             max_weight: 500_000_000,
@@ -239,10 +255,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(60),
             is_exact_feasible: false,
         },
+        // Lv 17: ANTI-GREEDY — Heavy Hitters (value = sqrt(weight))
         Level {
             number: 17,
             name: "Heavy Hitters",
-            description: "10K items. Value scales with sqrt(weight).",
+            description: "10K items. Value scales with sqrt(weight). Heavy = gold.",
             num_items: 10_000,
             capacity_factor: 0.25,
             max_weight: 1_000_000,
@@ -250,6 +267,7 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(60),
             is_exact_feasible: false,
         },
+        // Lv 18: ANTI-GREEDY — Greedy's Nightmare (all patterns combined)
         Level {
             number: 18,
             name: "Greedy's Nightmare",
@@ -261,10 +279,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(60),
             is_exact_feasible: false,
         },
+        // Lv 19: ANTI-GREEDY — Heavy Hitters at scale
         Level {
             number: 19,
-            name: "Scale Test",
-            description: "50K items. Pure scale.",
+            name: "Heavy Hitters XL",
+            description: "50K items. Quadratic value at massive scale.",
             num_items: 50_000,
             capacity_factor: 0.1,
             max_weight: 10_000_000,
@@ -272,10 +291,11 @@ pub fn get_levels() -> Vec<Level> {
             time_limit: Duration::from_secs(120),
             is_exact_feasible: false,
         },
+        // Lv 20: Standard (pure scale test)
         Level {
             number: 20,
             name: "God Mode",
-            description: "100K items. Beat greedy here and you're hired.",
+            description: "100K items. Standard distribution. Pure scale.",
             num_items: 100_000,
             capacity_factor: 0.08,
             max_weight: 100_000_000,
@@ -290,7 +310,8 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
     let mut rng = StdRng::seed_from_u64(seed + level.number as u64 * 31337);
 
     let items: Vec<Item> = match level.number {
-        3 | 7 | 12 | 15 => {
+        // Gem Traps: heavy diamonds + light pebbles
+        2 | 7 | 11 | 15 => {
             let mut items = Vec::new();
             let gem_count = level.num_items / 10;
             for _ in 0..gem_count {
@@ -307,7 +328,8 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
-        4 => {
+        // Weight Cliff: one item worth more than everything else combined
+        3 => {
             let mut items = Vec::new();
             items.push(Item {
                 weight: level.max_weight,
@@ -321,7 +343,8 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
-        5 | 10 => {
+        // Inverse Density: low density items pack perfectly, high density items waste space
+        4 | 10 => {
             let mut items = Vec::new();
             let combo_count = level.num_items / 5;
             for _ in 0..combo_count {
@@ -340,17 +363,8 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
-        8 => (0..level.num_items)
-            .map(|i| {
-                let step = (i % 10) as u64 + 1;
-                Item {
-                    weight: step * (level.max_weight / 10),
-                    value: step * step * (level.max_value / 100)
-                        + rng.gen_range(0..=level.max_value / 50),
-                }
-            })
-            .collect(),
-        9 => {
+        // Decoy Flood: 90% decoys with great density but tiny value
+        5 | 9 => {
             let mut items = Vec::new();
             let real_count = level.num_items / 10;
             for _ in 0..real_count {
@@ -367,18 +381,19 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
-        13 | 17 => (0..level.num_items)
-            .map(|_| {
-                let w = rng.gen_range(1..=level.max_weight);
-                let v = ((w as f64).sqrt() * (level.max_value as f64 / 100.0)) as u64
-                    + rng.gen_range(0..=level.max_value / 100);
+        // Staircase: value grows quadratically with weight steps
+        8 => (0..level.num_items)
+            .map(|i| {
+                let step = (i % 10) as u64 + 1;
                 Item {
-                    weight: w,
-                    value: v,
+                    weight: step * (level.max_weight / 10),
+                    value: step * step * (level.max_value / 100)
+                        + rng.gen_range(0..=level.max_value / 50),
                 }
             })
             .collect(),
-        14 => {
+        // Capacity Wasters: weights are multiples, greedy picks badly and leaves gaps
+        12 => {
             let mut items = Vec::new();
             for _ in 0..level.num_items {
                 let base = rng.gen_range(1..=20) as u64;
@@ -389,6 +404,19 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
+        // Quadratic Value / Heavy Hitters: v = sqrt(w) * scale
+        14 | 17 | 19 => (0..level.num_items)
+            .map(|_| {
+                let w = rng.gen_range(1..=level.max_weight);
+                let v = ((w as f64).sqrt() * (level.max_value as f64 / 100.0)) as u64
+                    + rng.gen_range(0..=level.max_value / 100);
+                Item {
+                    weight: w,
+                    value: v,
+                }
+            })
+            .collect(),
+        // Correlated Chaos: value ≈ weight + small noise
         16 => (0..level.num_items)
             .map(|_| {
                 let w = rng.gen_range(1..=level.max_weight);
@@ -404,21 +432,25 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
                 }
             })
             .collect(),
+        // Greedy's Nightmare: all anti-greedy patterns mixed together
         18 => {
             let mut items = Vec::new();
             let chunk = level.num_items / 5;
+            // Gems
             for _ in 0..chunk {
                 items.push(Item {
                     weight: rng.gen_range(50_000..=100_000),
                     value: rng.gen_range(80_000..=100_000),
                 });
             }
+            // Pebbles (high density decoys)
             for _ in 0..chunk {
                 items.push(Item {
                     weight: rng.gen_range(100..=500),
                     value: rng.gen_range(500..=2_000),
                 });
             }
+            // Correlated
             for _ in 0..chunk {
                 let w = rng.gen_range(1_000..=50_000);
                 items.push(Item {
@@ -426,6 +458,7 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
                     value: w + rng.gen_range(0..=1_000),
                 });
             }
+            // Capacity wasters (multiples)
             for _ in 0..chunk {
                 let base = rng.gen_range(1..=100) as u64;
                 items.push(Item {
@@ -433,6 +466,7 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
                     value: rng.gen_range(10_000..=50_000),
                 });
             }
+            // Quadratic value
             for _ in 0..(level.num_items - 4 * chunk) {
                 let w = rng.gen_range(1..=level.max_weight);
                 let v = ((w as f64).sqrt() * 300.0) as u64;
@@ -443,6 +477,7 @@ pub fn generate_problem(level: &Level, seed: u64) -> KnapsackProblem {
             }
             items
         }
+        // Standard uniform random
         _ => (0..level.num_items)
             .map(|_| Item {
                 weight: rng.gen_range(1..=level.max_weight),
@@ -577,56 +612,56 @@ fn solve_evolution(problem: &KnapsackProblem) -> KnapsackSolution {
 
     let config = if n <= 100 {
         EvolutionConfig {
-            population_size: 50,
-            generations: 150,
+            population_size: 80,
+            generations: 500,
             elite_count: 2,
             selection_rate: 0.4,
-            mutation_rate: 0.05,
+            mutation_rate: 0.08,
             seed: 42,
         }
     } else if n <= 500 {
         EvolutionConfig {
-            population_size: 40,
-            generations: 100,
+            population_size: 60,
+            generations: 300,
             elite_count: 2,
             selection_rate: 0.4,
-            mutation_rate: 0.03,
+            mutation_rate: 0.06,
             seed: 42,
         }
     } else if n <= 2_000 {
         EvolutionConfig {
-            population_size: 30,
-            generations: 60,
+            population_size: 50,
+            generations: 200,
             elite_count: 2,
             selection_rate: 0.4,
-            mutation_rate: 0.02,
+            mutation_rate: 0.04,
             seed: 42,
         }
     } else if n <= 10_000 {
         EvolutionConfig {
-            population_size: 20,
-            generations: 40,
+            population_size: 40,
+            generations: 100,
+            elite_count: 2,
+            selection_rate: 0.3,
+            mutation_rate: 0.02,
+            seed: 42,
+        }
+    } else if n <= 50_000 {
+        EvolutionConfig {
+            population_size: 25,
+            generations: 50,
             elite_count: 2,
             selection_rate: 0.3,
             mutation_rate: 0.01,
             seed: 42,
         }
-    } else if n <= 50_000 {
+    } else {
         EvolutionConfig {
             population_size: 15,
-            generations: 20,
+            generations: 25,
             elite_count: 1,
             selection_rate: 0.3,
             mutation_rate: 0.005,
-            seed: 42,
-        }
-    } else {
-        EvolutionConfig {
-            population_size: 10,
-            generations: 10,
-            elite_count: 1,
-            selection_rate: 0.3,
-            mutation_rate: 0.002,
             seed: 42,
         }
     };
@@ -635,7 +670,7 @@ fn solve_evolution(problem: &KnapsackProblem) -> KnapsackSolution {
     KnapsackSolution { selected }
 }
 
-const SOLVER_TIMEOUT: Duration = Duration::from_secs(180); // 3 minutes
+const SOLVER_TIMEOUT: Duration = Duration::from_secs(900); // 15 minutes
 
 fn run_with_timeout(
     solver: fn(&KnapsackProblem) -> KnapsackSolution,
@@ -843,9 +878,9 @@ fn main() {
         .collect();
 
     let solvers: Vec<(&str, fn(&KnapsackProblem) -> KnapsackSolution)> = vec![
-        ("Recursive (brute force)", solve_recursive),
-        ("Recursive + Memoization", solve_recursive_memo),
-        ("Tabular DP", solve_tabular_dp),
+        //("Recursive (brute force)", solve_recursive),
+        //("Recursive + Memoization", solve_recursive_memo),
+        //("Tabular DP", solve_tabular_dp),
         ("Evolutionary", solve_evolution),
     ];
 

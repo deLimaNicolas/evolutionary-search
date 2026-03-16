@@ -436,27 +436,27 @@ fn simulated_annealing(candidate: &mut Candidate, problem: &KnapsackProblem, rng
     let n = problem.items.len();
 
     let max_iterations = if n <= 100 {
-        50_000
+        500_000
     } else if n <= 500 {
-        30_000
+        200_000
     } else if n <= 2_000 {
-        15_000
+        100_000
     } else if n <= 10_000 {
-        8_000
+        50_000
     } else if n <= 50_000 {
-        3_000
+        15_000
     } else {
-        1_000
+        5_000
     };
 
-    let initial_temp: f64 = candidate.fitness as f64 * 0.05;
-    let cooling_rate: f64 = 1.0 - (3.0 / max_iterations as f64);
+    let initial_temp: f64 = candidate.fitness as f64 * 0.15;
+    let cooling_rate: f64 = 1.0 - (5.0 / max_iterations as f64);
 
     let mut temp = initial_temp;
     let mut best = candidate.clone();
 
     for _ in 0..max_iterations {
-        if temp < 0.01 {
+        if temp < 0.001 {
             break;
         }
 
@@ -477,7 +477,7 @@ fn simulated_annealing(candidate: &mut Candidate, problem: &KnapsackProblem, rng
 
         let mut add_idx = rng.gen_range(0..n);
         let mut tries = 0;
-        while (candidate.genes[add_idx] || problem.items[add_idx].weight > space) && tries < 20 {
+        while (candidate.genes[add_idx] || problem.items[add_idx].weight > space) && tries < 30 {
             add_idx = rng.gen_range(0..n);
             tries += 1;
         }
@@ -500,9 +500,8 @@ fn simulated_annealing(candidate: &mut Candidate, problem: &KnapsackProblem, rng
         } else {
             let accept_prob = (delta / temp).exp();
             if rng.gen_bool(accept_prob.min(1.0)) {
-                // Accept worse solution — exploring
+                // Accept worse solution
             } else {
-                // Reject — undo
                 candidate.remove(add_idx, problem);
                 candidate.add(rem_idx, problem);
             }
@@ -568,7 +567,7 @@ pub fn evolve(problem: &KnapsackProblem, config: &EvolutionConfig) -> Vec<usize>
     // }
 
     // Simulated annealing pass on top candidates
-    let sa_count = candidates.len().min(5);
+    let sa_count = candidates.len().min(10);
     for i in 0..sa_count {
         let mut c = candidates[i].clone();
         simulated_annealing(&mut c, problem, &mut rng);
