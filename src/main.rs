@@ -843,9 +843,9 @@ fn main() {
         .collect();
 
     let solvers: Vec<(&str, fn(&KnapsackProblem) -> KnapsackSolution)> = vec![
-        //("Recursive (brute force)", solve_recursive),
-        //("Recursive + Memoization", solve_recursive_memo),
-        //("Tabular DP", solve_tabular_dp),
+        ("Recursive (brute force)", solve_recursive),
+        ("Recursive + Memoization", solve_recursive_memo),
+        ("Tabular DP", solve_tabular_dp),
         ("Evolutionary", solve_evolution),
     ];
 
